@@ -354,9 +354,15 @@ echo $leo-&gt;getTranslations($in);</string>
 				<key>escaping</key>
 				<integer>36</integer>
 				<key>script</key>
-				<string>$in = "{query}";
-preg_match("/\{([^}]*)\s*\}\{([^}]*)\s*\}\{([^}]*)\s*\}/", $in, $matches);
-echo $matches[3];</string>
+				<string>
+					require_once('workflows.php');
+					$in = "{query}";
+					$w = new Workflows();
+					$home = $w-&gt;home();
+					preg_match("/\{([^}]*)\s*\}\{([^}]*)\s*\}\{([^}]*)\s*\}/", $in, $matches);
+					file_put_contents($home . '/Documents/vocabulary2learn.csv', '"' . $matches[2] . '","' . $matches[3] ."\"\r\n", FILE_APPEND);
+					echo $matches[3];
+				</string>
 				<key>type</key>
 				<integer>1</integer>
 			</dict>
